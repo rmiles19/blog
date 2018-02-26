@@ -14,20 +14,10 @@ class PagesController < ApplicationController
     @page = Page.new
   end
 
-  #Get /pages/:id/edit
+  #GET /pages/:id/edit
   def edit
     @page = Page.find(params[:id])
   end
-
-  #Get put/patch /pages/:id
-  def update
-    @page = Page.find(params[:id])
-    if @page.update(page_params)
-    redirect_to page_path(@page)
-    else 
-      render :edit
-    end
-  end 
 
   #POST /pages
   def create
@@ -38,6 +28,23 @@ class PagesController < ApplicationController
     else
       render :new
     end
+  end
+ 
+  # PUT / PATCH /pages/:id
+  def update
+    @page = Page.find(params[:id])
+
+    if @page.update(page_params)
+      redirect_to page_path(@page)
+    else
+      render :edit
+    end
+  end
+
+  #DELETE /pages/:id
+  def destroy
+    Page.find(params[:id]).destroy
+    redirect_to pages_path
   end
 
   private
